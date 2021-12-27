@@ -10,4 +10,4 @@ Over time, I will likely return to this project and update the techniques used a
 I modified the code provided by the following two users as part of my program:
 
 Vlad Siv – <a href="https://stackoverflow.com/questions/70233801/python-scraping-of-wikipedia-category-page">"Python scraping of Wikipedia category page"</a><p>
-baduker - <a href="http://5.9.10.113/64256790/how-do-i-web-scrape-a-wikipedia-infobox-table">"How do I Web Scrape a Wikipedia Infobox Table?"</a>
+baduker – <a href="http://5.9.10.113/64256790/how-do-i-web-scrape-a-wikipedia-infobox-table">"How do I Web Scrape a Wikipedia Infobox Table?"</a>
