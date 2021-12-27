@@ -4,9 +4,9 @@ import unicodedata
 import pandas as pd
 
 
-def get_categories(data):
-    print('Getting categories...')
-    categories = {}
+def get_pages(data):
+    print('Getting pages...')
+    pages = {}
     soup = BeautifulSoup(data, 'lxml')
     group_divs = soup.find_all('div', {'class': 'mw-category-group'})
     for div in group_divs:
@@ -14,9 +14,9 @@ def get_categories(data):
         for link in links:
             title = link.get('title')
             href = link.get('href')
-            categories[title] = 'https://en.wikipedia.org' + href
-    print(f'Total categories (pre-processing): {len(categories)}')
-    return categories
+            pages[title] = 'https://en.wikipedia.org' + href
+    print(f'Total pages (pre-processing): {len(pages)}')
+    return pages
 
 
 def get_infobox(data):
@@ -33,21 +33,21 @@ def parse_results(results):
     }
 
 
-def process_categories(categories):
+def process_pages(pages):
     result = {}
     count = 0
-    for title, link in categories.items():
+    for title, link in pages.items():
         print(f'Processing: {title}, from: {link}')
         data = requests.get(link).content
         info = get_infobox(data)
         result[title] = parse_results(info)
         count += 1
-    print(f'Categories processed: {count}')
+    print(f'Pages processed: {count}')
     return result
 
 
-def clean_categories(categories):
-    return {k: v for k, v in categories.items() if 'Category' not in k and 
+def clean_pages(pages):
+    return {k: v for k, v in pages.items() if 'Category' not in k and
             'Template' not in k and 
             'List' not in k and 
             'liner' not in k and
@@ -225,10 +225,10 @@ def clean_df(df):
 
 def main():
     url = 'https://en.wikipedia.org/wiki/Category:Ships_of_the_White_Star_Line'
-    data_categories = requests.get(url).content
-    categories = get_categories(data_categories)
-    categories = clean_categories(categories)
-    result = process_categories(categories)
+    data_pages = requests.get(url).content
+    pages = get_pages(data_pages)
+    pages = clean_pages(pages)
+    result = process_pages(pages)
     result_dict = clean_dict(result)
     result_df = generate_df(result_dict)
     final_df = clean_df(result_df)
