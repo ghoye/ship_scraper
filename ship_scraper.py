@@ -206,9 +206,9 @@ def clean_df(df):
     pd.options.mode.chained_assignment = None
     for x in range(0, len(df['Check1'])):
         if df['Check1'][x] == True:
-            df['Class'][x] = ''
+            df['Class'][x] = '' # If 'Class' value already included in 'Classtype' value, delete 'Class' value
         if df['Check2'][x] == True:
-            df['Type'][x] = ''
+            df['Type'][x] = '' # If 'Type' value already included in 'Classtype' value, delete 'Type' value
     df['Classtype']=df[cols].fillna('').apply(pd.unique,1).apply(' '.join).str.rstrip(' ')
     
     df['Classtype'] = df['Classtype'].str.replace('  ', ' ')
