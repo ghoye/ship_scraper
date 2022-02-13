@@ -91,7 +91,7 @@ def clean_dict(result):
 
 def generate_df(result):
     df = pd.DataFrame.from_dict(result, orient = 'index')
-    df.index.names = ['Ship']
+    df.index.names = ['Ship Name']
     return df
 
 
@@ -102,15 +102,13 @@ def clean_df(df):
         if '\n' in col:
             new_col = col.replace('\n', '')
             df.rename(columns = {col: new_col}, inplace = True)
-    
-    df.rename(columns = {'Name':'Name(s)', 'Owner':'Owner(s)','Operator':'Operator(s)', 
-                         'Port of registry':'Port(s) of registry', 'Class and type':'Classtype',
-                         'Beam':'Beam (ft)', 'Depth':'Depth (ft)', 'Tonnage':'Tonnage (GRT)', 
-                         'Length':'Length (ft)', 'Speed':'Speed (kn)'}, inplace = True)
-    new_cols = ['Name(s)', 'Owner(s)', 'Operator(s)', 'Port(s) of registry', 'Builder', 
-                'Classtype', 'Class', 'Type', 'Length (ft)', 'Beam (ft)', 'Depth (ft)', 
-                'Tonnage (GRT)', 'Speed (kn)', 'Capacity', 'Crew', 'Launched', 'Completed', 
-                'Maiden voyage', 'Fate']
+
+    df.rename(columns = {'Class and type':'Classtype', 'Beam':'Beam (ft)', 'Depth':'Depth (ft)', 
+                         'Tonnage':'Tonnage (GRT)', 'Length':'Length (ft)', 'Speed':'Speed (kn)'}, 
+                         inplace = True)
+    # Remove some of the original variables; may re-add 'Capacity', 'Crew', and 'Fate' later
+    new_cols = ['Builder', 'Classtype', 'Class', 'Type', 'Length (ft)', 'Beam (ft)', 'Depth (ft)', 
+                'Tonnage (GRT)', 'Speed (kn)', 'Launched', 'Completed', 'Maiden voyage']
     df = df[new_cols]
     
     # Strip whitespace and add spaces in all column values
@@ -120,7 +118,10 @@ def clean_df(df):
         df[col] = df[col].str.replace(r'\[.*\]','', regex=True)
         df[col] = df[col].str.replace(r'\)(?=[a-zA-Z])', '), ', regex=True)
         df[col] = df[col].str.replace(r'(?=[A-Z])(?<=[a-z])', ', ', regex=True)
-    
+
+    # Rename 'Titanic' to 'RMS Titanic'
+    df.rename(index={'Titanic': 'RMS Titanic'}, inplace=True)
+
     # Standardize 'Builder' entries that are Harland & Wolff
     df.Builder[df['Builder'].str.contains('Harland', na=False)] = 'Harland & Wolff, Belfast'
     
@@ -184,10 +185,13 @@ def clean_df(df):
     df[['Depth_ft', 'Depth_in']] = df['Depth (ft)'].str.extract(r'(?:(\d+(?:\.\d+)?)ft)?\s*(?:(\d+)in)?').fillna(0).astype('float') # If no value given, filled with zero
     df['Depth (ft)'] = round(((df['Depth_ft'] * 12) + df['Depth_in'])/12, 1)
     df = df.drop(columns=['Depth_ft', 'Depth_in'])
-    
+
+    # Strip any characters after year in 'Launched'
+    df['Launched'] = df['Launched'].str.replace(r'(?<=[0-9]{4}).*$', '', regex=True)
+
     # Abbreviate month names
     months = {'January':'Jan', 'February':'Feb', 'March':'Mar', 'April':'Apr', 'May':'May',
-             'June':'Jun', 'July':'Jul', 'August':'Aug', 'September':'Sept', 'October':'Oct',
+             'June':'Jun', 'July':'Jul', 'August':'Aug', 'September':'Sep', 'October':'Oct',
              'November':'Nov', 'December':'Dec'}
     for col in df.columns[15:19]:
         for key in months:
@@ -196,7 +200,10 @@ def clean_df(df):
     # Remove ports of departure and arrival from 'Maiden voyage'
     df['Maiden voyage'] = df['Maiden voyage'].str.replace(r'([a-zA-Z]+)[^\w\s]([a-zA-Z]+(?:\s*[a-zA-Z]+)),\s(?=([0-9].*))', '', regex=True)
     df['Maiden voyage'] = df['Maiden voyage'].str.replace(r'(?<=[0-9]{4}).*$', '', regex=True)
-   
+
+    # Remove any entries containing only 1 digit (error) under 'Completed'
+    df['Completed'] = df['Completed'].str.replace(r'^([0-9]{1})$', '', regex=True)
+
     # Combine 'Class' and 'Type' into 'Classtype'
     df['Type'] = df['Type'].str.lower()
     
@@ -219,7 +226,7 @@ def clean_df(df):
     df['Classtype'] = df['Classtype'].apply(lambda x: x[0].upper() + x[1:] if len(x) != 0 else '')
     df = df.drop(columns=['Check1', 'Check2', 'Class', 'Type'])
     df.rename(columns = {'Classtype':'Class/type'}, inplace = True)
-    
+
     return df
 
 
