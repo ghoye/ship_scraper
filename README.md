@@ -6,7 +6,7 @@ After filtering out Wikipedia template and list pages—leaving 86 instances out
 
 
 ### References
-I modified code provided by the following two users as part of my program:
+In writing my program, I took inspiration from code solutions provided by the following two users:
 
 Vlad Siv – <a href="https://stackoverflow.com/questions/70233801/python-scraping-of-wikipedia-category-page">"Python scraping of Wikipedia category page"</a><p>
 baduker – <a href="http://5.9.10.113/64256790/how-do-i-web-scrape-a-wikipedia-infobox-table">"How do I Web Scrape a Wikipedia Infobox Table?"</a>
