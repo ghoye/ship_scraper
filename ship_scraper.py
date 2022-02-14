@@ -183,14 +183,6 @@ def clean_df(df):
 
     # Strip any characters after year in 'Launched'
     df['Launched'] = df['Launched'].str.replace(r'(?<=[0-9]{4}).*$', '', regex=True)
-
-    # Abbreviate month names
-    months = {'January':'Jan', 'February':'Feb', 'March':'Mar', 'April':'Apr', 'May':'May',
-             'June':'Jun', 'July':'Jul', 'August':'Aug', 'September':'Sep', 'October':'Oct',
-             'November':'Nov', 'December':'Dec'}
-    for col in df.columns[15:19]:
-        for key in months:
-            df[col] = df[col].str.replace(key, months[key])
     
     # Remove ports of departure and arrival from 'Maiden voyage'
     df['Maiden voyage'] = df['Maiden voyage'].str.replace(r'([a-zA-Z]+)[^\w\s]([a-zA-Z]+(?:\s*[a-zA-Z]+)),\s(?=([0-9].*))', '', regex=True)
@@ -218,6 +210,14 @@ def clean_df(df):
     df['Classtype'] = df['Classtype'].apply(lambda x: x[0].upper() + x[1:] if len(x) != 0 else '')
     df = df.drop(columns=['Check1', 'Check2', 'Class', 'Type'])
     df.rename(columns = {'Classtype':'Class/type'}, inplace = True)
+
+    # Abbreviate month names
+    months = {'January': 'Jan', 'February': 'Feb', 'March': 'Mar', 'April': 'Apr', 'May': 'May',
+              'June': 'Jun', 'July': 'Jul', 'August': 'Aug', 'September': 'Sep', 'October': 'Oct',
+              'November': 'Nov', 'December': 'Dec'}
+    for col in df.columns[7:10]:
+        for key in months:
+            df[col] = df[col].str.replace(key, months[key])
 
     return df
 
