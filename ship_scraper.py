@@ -51,6 +51,7 @@ def clean_pages(pages):
             'Template' not in k and 
             'List' not in k and 
             'liner' not in k and
+            'Big Four' not in k and
             'unfinished' not in k}
 
 
@@ -63,12 +64,6 @@ def clean_dict(result):
                           'Type': 'Cargo ship', 'Tonnage': '8,010 GRT', 'Length': '137.3 metres (450 ft 6 in)',
                           'Beam': '17.8 metres (58 ft 5 in)', 'Depth':'11.3 metres (37 ft 1 in)', 'Installed power': '2 x Triple expansion engines',
                           'Propulsion': 'Two screw propellers', 'Sail plan': 'Liverpool - New York City', 'Speed': '11 knots'}
-    result['Big Four (White Star Line)'] = {'Builder': 'Harland & Wolff Ltd.', 'Operator': 'White Star Line',
-                                           'Built': '1901–1906', 'In service': '1901–1934', 'Completed': '4',
-                                           'Type': 'Ocean liner', 'Tonnage': '21,000–24,550 ton', 
-                                            'Length': '700 to 730 ft (210 to 220 m)', 'Beam': '75.3 ft (23.0 m)',
-                                           'Depth': '44 ft (13 m)', 'Propulsion': 'Steam quadruple expansion engines, powering two propellers',
-                                           'Speed': '17 kn (31 km/h)', 'Capacity': 'cir. 2,850 passengers'}
     result['SS Germanic (1874)'] = {'Name': 'Germanic (1874-1905), Ottawa (1905-1910)', 
                                     'Operator': 'White Star Line (1874-1904), American Line (1904-1905), Dominion Line (1905-1910)',
                                    'Port of registry': 'Liverpool, England', 'Builder': 'Harland & Wolff Ltd.', 'Yard Number': '85',
@@ -200,9 +195,6 @@ def clean_df(df):
     # Remove ports of departure and arrival from 'Maiden voyage'
     df['Maiden voyage'] = df['Maiden voyage'].str.replace(r'([a-zA-Z]+)[^\w\s]([a-zA-Z]+(?:\s*[a-zA-Z]+)),\s(?=([0-9].*))', '', regex=True)
     df['Maiden voyage'] = df['Maiden voyage'].str.replace(r'(?<=[0-9]{4}).*$', '', regex=True)
-
-    # Remove any entries containing only 1 digit (error) under 'Completed'
-    df['Completed'] = df['Completed'].str.replace(r'^([0-9]{1})$', '', regex=True)
 
     # Combine 'Class' and 'Type' into 'Classtype'
     df['Type'] = df['Type'].str.lower()
