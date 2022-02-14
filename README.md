@@ -6,11 +6,11 @@ After filtering out unnecessary pages—namely the Wikipedia template and list p
 
 | Ship Name | Builder | Class/type | Length (ft) | Beam (ft) | Depth (ft) | Tonnage (GRT) | Speed (kn) | Launched | Completed | Maiden voyage |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| SS Adriatic (1871) | Harland & Wolff, Belfast | Oceanic-class ocean liner | 452.0 | 40.9 | 31.0 | 3888 | 14.5 | 17 Oct 1871 | 31 Mar 1872 | 11 Apr 1872 |
-| RMS Adriatic (1906) | Harland & Wolff, Belfast | Big Four ocean liner | 729.0 | 75.6 | 52.6 | 24679 | 16 | 20 Sep 1906 | 25 Apr 1907 | 8 May 1907 |
-| SS Afric | Harland & Wolff, Belfast | Jubilee-class ocean liner | 550.0 | 63.3 | 0.0 | 11948 | 13.5 | 16 Nov 1898 |  | 8 Feb 1899 |
-| SS Albertic | AG Weser | Ocean liner | 590.7 | 72.0 | 0.0 | 18940 | 0.0 | 23 Mar 1920 |  |  |
-| SS American (1895) | Harland & Wolff, Belfast |  | 475.0 | 55.2 | 0.0 | 8249 | 11 | 8 Aug 1895 |  | 9 Oct 1895 |
+| SS Adriatic (1871) | Harland & Wolff, Belfast | Oceanic-class ocean liner | 452.0 | 40.9 | 31.0 | 3888.0 | 14.5 | 17 Oct 1871 | 31 Mar 1872 | 11 Apr 1872 |
+| RMS Adriatic (1906) | Harland & Wolff, Belfast | Big Four ocean liner | 729.0 | 75.6 | 52.6 | 24679.0 | 16.0 | 20 Sep 1906 | 25 Apr 1907 | 8 May 1907 |
+| SS Afric | Harland & Wolff, Belfast | Jubilee-class ocean liner | 550.0 | 63.3 | 0.0 | 11948.0 | 13.5 | 16 Nov 1898 |  | 8 Feb 1899 |
+| SS Albertic | AG Weser | Ocean liner | 590.7 | 72.0 | 0.0 | 18940.0 | 0.0 | 23 Mar 1920 |  |  |
+| SS American (1895) | Harland & Wolff, Belfast |  | 475.0 | 55.2 | 0.0 | 8249.0 | 11 | 8 Aug 1895 |  | 9 Oct 1895 |
 
 The full dataset can be found in the file <i>ships.csv</i>.
 
