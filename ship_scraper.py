@@ -125,13 +125,13 @@ def clean_df(df):
     df['Tonnage (GRT)'] = df['Tonnage (GRT)'].str.replace(r',+', '', regex=True)
     df['Tonnage (GRT)'] = df['Tonnage (GRT)'].str.replace(r'[-]|[–]', ' ', regex=True)
     df['Tonnage (GRT)'] = df['Tonnage (GRT)'].str.replace(r'(?<=[0-9])\s(.*)', '', regex=True)
-    #df['Tonnage (GRT)'] = df['Tonnage (GRT)'].astype('int32')
+    df['Tonnage (GRT)'] = df['Tonnage (GRT)'].astype('float').fillna(0) # If no value given, filled with zero
     
     # Standardize 'Speed' in nautical knots
     df['Speed (kn)'] = df['Speed (kn)'].str.replace(r'(.*):', '', regex=True)
     df['Speed (kn)'] = df['Speed (kn)'].str.replace(r'[-]|[–]', ' ', regex=True)
     df['Speed (kn)'] = df['Speed (kn)'].str.replace(r'(?<=[0-9])\s(.*)', '', regex=True)
-    #df['Speed (kn)'] = df['Speed (kn)'].astype('int32')
+    df['Speed (kn)'] = df['Speed (kn)'].astype('float').fillna(0) # If no value given, filled with zero
 
     # Clean and standardize 'Length' in feet
     df['Length (ft)'] = df['Length (ft)'].str.replace('feet', 'ft')
